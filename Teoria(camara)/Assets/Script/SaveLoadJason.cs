@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +9,7 @@ struct PlayerData
 {
     public Vector3 position;
     public int score;
+    public string dates;
 }
 public class SaveLoadJason : MonoBehaviour
 {
@@ -33,6 +35,7 @@ public class SaveLoadJason : MonoBehaviour
         PlayerData playerdata = new PlayerData(); // instancio objeto que vamos a guardar 
         playerdata.position = transform.position; // se rellena de info
         playerdata.score = GameManager.instance.GetPoints();
+        playerdata.dates = DateTime.UtcNow.ToString("HH:mm:ss");
 
         string json = JsonUtility.ToJson(playerdata);   // pasar de un objeto serializable a un formato JSON con un formato string
         streamwriter.WriteLine(json);
