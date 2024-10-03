@@ -9,7 +9,7 @@ struct PlayerData
 {
     public Vector3 position;
     public int score;
-    public string dates;
+    public List<string> hours;
 }
 public class SaveLoadJason : MonoBehaviour
 {
@@ -35,7 +35,9 @@ public class SaveLoadJason : MonoBehaviour
         PlayerData playerdata = new PlayerData(); // instancio objeto que vamos a guardar 
         playerdata.position = transform.position; // se rellena de info
         playerdata.score = GameManager.instance.GetPoints();
-        playerdata.dates = DateTime.UtcNow.ToString("HH:mm:ss");
+        List<string> hoursAux = GameManager.instance.GetHours();
+        hoursAux.Add(DateTime.Now.ToString("HH:mm:ss"));
+        playerdata.hours = hoursAux;
 
         string json = JsonUtility.ToJson(playerdata);   // pasar de un objeto serializable a un formato JSON con un formato string
         streamwriter.WriteLine(json);
@@ -54,6 +56,7 @@ public class SaveLoadJason : MonoBehaviour
                 PlayerData playerdata = JsonUtility.FromJson<PlayerData>(streamReader.ReadToEnd()); // el streamReader lee el json entero y lo pasa a objeto serializable
                 transform.position = playerdata.position;
                 GameManager.instance.SetPoints(playerdata.score);
+                GameManager.instance.SetHours(playerdata.hours);
             }
             catch (System.Exception e)
             {

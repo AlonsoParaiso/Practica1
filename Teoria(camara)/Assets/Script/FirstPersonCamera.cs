@@ -24,7 +24,7 @@ public class FirstPersonCamera : MonoBehaviour
         transform.localEulerAngles = Vector3.right * mouseYRotation;
 
         
-        mouseYRotation = Mathf.Clamp(mouseYRotation, -90,90);
+        mouseYRotation = Mathf.Clamp(mouseYRotation, -90,90);//mover la camara en un angulo de 90º
         
 
         

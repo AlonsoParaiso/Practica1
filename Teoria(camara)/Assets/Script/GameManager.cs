@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance; //el game manager controla las variables del juego y es accesible a todos
     private float time;
     private int points;
+    private List<string> hours;
     public enum GameManagerVariables { TIME, POINTS };//para facilitar el codigo
 
     private void Awake()
@@ -16,6 +18,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;//se instancia el objecto
             DontDestroyOnLoad(gameObject);// no se destruye entre cargas
+            hours = new List<string>();
         }
         else
         {
@@ -50,6 +53,21 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Me cerraste wey");
         Application.Quit();
+    }
+
+    public void SetHours(List<String> value)
+    {
+        hours = value;
+    }
+
+    public List<string> GetHours()
+    {
+        return hours;
+    }
+
+    private void Start()
+    {
+        
     }
 
 }

@@ -9,7 +9,7 @@ public class SaveLoadTXT : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public List<DateTime> dateTimes = new List<DateTime>();
+
 
 
     private void Start()
@@ -24,12 +24,18 @@ public class SaveLoadTXT : MonoBehaviour
                 float z = float.Parse(sr.ReadLine());
                 int coin = int.Parse(sr.ReadLine());
                 
+                List<string> hoursAux = new List<string>();//Solo si se guarda lo ultimo
+                while (!sr.EndOfStream)
+                {
+                    hoursAux.Add(sr.ReadLine());
+                }
+
 
                 sr.Close();
 
                 transform.position = new Vector3(x, y, z);
                 GameManager.instance.SetPoints(coin);
-                
+                GameManager.instance.SetHours(hoursAux);
 
             }
             catch (System.Exception ex)
@@ -49,17 +55,11 @@ public class SaveLoadTXT : MonoBehaviour
         sw.WriteLine(transform.position.y);
         sw.WriteLine(transform.position.z);
         sw.WriteLine(GameManager.instance.GetPoints());
-        if (dateTimes != null)
+        List<string> list = GameManager.instance.GetHours();
+        list.Add(DateTime.Now.ToString("HH:mm:ss"));
+        foreach (string s in list)
         {
-            foreach (DateTime date in dateTimes)
-            {
-                sw.WriteLine(date.ToString());
-            }
-            sw.WriteLine(DateTime.Now.ToString());
-        }
-        else
-        {
-            sw.WriteLine(DateTime.Now.ToString());
+            sw.WriteLine(s);
         }
         
         sw.Close();//importante!!
